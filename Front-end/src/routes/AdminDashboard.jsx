@@ -92,16 +92,8 @@ const Footer = () => (
       <div>
         <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Contact</h4>
         <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
-            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
-            rahad@gmail.com
-        </p>
-        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
-            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
-            autanu2020@gmail.com
-        </p>
-        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
-            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
-            shajjad@gmail.com
+            <MailIcon className={`w-4 h-4 mr-2 text-[#1E3A8A] dark:text-[#3B82F6]`}/>
+            support@evotehub.com
         </p>
         <p className="text-xs text-slate-500 dark:text-slate-600">
             [Shajalal University of Science and Technology]
@@ -184,6 +176,17 @@ const timeAgo = (dateParam) => {
   if (hours < 24) return `${hours}h ago`;
   if (days < 7) return `${days}d ago`;
   return date.toLocaleDateString(); 
+};
+
+const getNominees = async (eventId) => {
+  try {
+    const response = await fetch(`/api/nominees?eventId=${eventId}`);
+    if (!response.ok) throw new Error('Failed to fetch nominees');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching nominees:', error);
+    return [];
+  }
 };
 
 const NavItem = ({ icon: Icon, label, isActive, onClick }) => {
@@ -435,6 +438,7 @@ export default function AdminDashboard(){
   const [campaignPosts, setCampaignPosts] = useState([])
   const [activeMenuPostId, setActiveMenuPostId] = useState(null)
   const [expandedComments, setExpandedComments] = useState({})
+  const [nominees, setNominees] = useState([])
 
   const [isRotating, setIsRotating] = useState(false)
   const [codeInfo, setCodeInfo] = useState({ code: '', expiresAt: null })
@@ -497,21 +501,24 @@ export default function AdminDashboard(){
     setCounts({ simple: [], rank: [] })
     setPending([])
     setVoters([])
+    setNominees([])
     setCampaignPosts([])
     setActiveMenuPostId(null)
     setExpandedComments({})
 
     const fetchEventData = async () => {
       try{
-        const [c, p, v, posts] = await Promise.all([
+        const [c, p, v, n, posts] = await Promise.all([
           countVote(activeEvent._id),
           getPendingNominees(activeEvent._id),
           getVoters(activeEvent._id),
+          getNominees(activeEvent._id),
           listCampaignPosts(activeEvent._id)
         ])
         setCounts({ simple: c.NomineeListForSingleAndMultiVote, rank: c.NomineeListForRank })
         setPending(p)
         setVoters(v)
+        setNominees(Array.isArray(n) ? n : (n?.nominees || []))
         setCampaignPosts(Array.isArray(posts) ? posts : (posts?.posts || []))
       } catch(err){
         console.error("Failed to fetch event data:", err)
@@ -1034,6 +1041,24 @@ export default function AdminDashboard(){
                     <span className="font-medium">{v.UserID?.FullName || v.UserID}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className={`p-6 rounded-xl ${BG_CARD} shadow-xl border border-gray-200 dark:border-gray-700`}>
+              <h4 className={`font-bold text-xl ${ACCENT_SUCCESS} mb-4 border-b border-gray-200 dark:border-gray-700 pb-2`}>
+                Registered Nominees ({nominees.length})
+              </h4>
+              <div className="space-y-3 max-h-72 overflow-y-auto pr-2">
+                {nominees.map(n => (
+                  <div key={n.UserID?._id || n.UserID} className={`flex items-center gap-3 text-sm p-3 rounded-lg border border-gray-200 dark:border-gray-700 ${BG_DARK_CARD}`}>
+                    <img src={n.UserID?.ProfileImage || 'https://placehold.co/32x32/d1d5db/4b5563?text=N'} className="w-8 h-8 rounded-full object-cover" alt="Nominee Profile"/>
+                    <div className="flex-1">
+                      <div className="font-medium">{n.UserID?.FullName || n.UserID}</div>
+                      <div className={`text-xs ${TEXT_SECONDARY}`}>{n.Description || 'No description'}</div>
+                    </div>
+                  </div>
+                ))}
+                {nominees.length === 0 && <div className={`text-sm ${TEXT_SECONDARY} p-3 text-center`}>No registered nominees for this event.</div>}
               </div>
             </div>
           </div>

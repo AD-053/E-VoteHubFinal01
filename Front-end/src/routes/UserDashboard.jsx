@@ -219,7 +219,7 @@ const EditPostModal = ({ post, isOpen, onClose, onSave, isLoading }) => {
 
   const handleSave = () => {
     if (!editContent.trim() && existingPictures.length === 0 && existingVideos.length === 0 && editPictures.length === 0 && editVideos.length === 0) {
-      Swal.fire({title: 'Invalid Post', text: 'Your post cannot be empty', icon: 'error', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Invalid Post', text: 'Your post cannot be empty', icon: 'error', confirmButtonText: 'OK', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
       return
     }
     onSave({
@@ -711,22 +711,22 @@ export default function UserDashboard(){
     try{ 
       await voterRegister(activeEvent._id); 
       setIsVoterRegistered(true); 
-      Swal.fire({title: 'Registration Successful!', text: 'You have been registered as a voter', icon: 'success', confirmButtonText: 'Great!', background: 'var(--bg-card)', color: 'var(--text-primary)'}) 
+      Swal.fire({title: 'Registration Successful!', text: 'You have been registered as a voter', icon: 'success', confirmButtonText: 'Great!', background: 'rgba(134, 239, 172, 0.15)', color: 'var(--text-primary)'}) 
     }catch(err){ 
-      Swal.fire({title: 'Registration Failed', text: err?.response?.data?.message || 'Failed to register as voter', icon: 'error', confirmButtonText: 'Try Again', background: 'var(--bg-card)', color: 'var(--text-primary)'}) 
+      Swal.fire({title: 'Registration Failed', text: err?.response?.data?.message || 'Failed to register as voter', icon: 'error', confirmButtonText: 'Try Again', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'}) 
     }
   }, [activeEvent])
 
   const onNominate = useCallback(async (e)=>{
     if(e) { e.preventDefault(); e.stopPropagation() }
     if(!activeEvent) return
-    if(!selectedBallot){ Swal.fire({title: 'Missing Ballot', text: 'Please select a ballot image to continue', icon: 'warning', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'}); return }
+    if(!selectedBallot){ Swal.fire({title: 'Missing Ballot', text: 'Please select a ballot image to continue', icon: 'warning', confirmButtonText: 'OK', background: 'rgba(239, 193, 68, 0.15)', color: 'var(--text-primary)'}); return }
     try{
       await nomineeRegister({ EventID: activeEvent._id, SelectedBalot:{ url: selectedBallot.url, publicId: selectedBallot.publicId }, Description: desc })
       setIsNomineeRegistered(true)
-      Swal.fire({title: 'Submitted Successfully!', text: 'Your nominee registration has been submitted and is awaiting admin approval', icon: 'success', confirmButtonText: 'Perfect!', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Submitted Successfully!', text: 'Your nominee registration has been submitted and is awaiting admin approval', icon: 'success', confirmButtonText: 'Perfect!', background: 'rgba(134, 239, 172, 0.15)', color: 'var(--text-primary)'})
     }catch(err){
-      Swal.fire({title: 'Registration Failed', text: err?.response?.data?.message || 'Failed to register as nominee', icon: 'error', confirmButtonText: 'Try Again', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Registration Failed', text: err?.response?.data?.message || 'Failed to register as nominee', icon: 'error', confirmButtonText: 'Try Again', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
     }
   }, [activeEvent, selectedBallot, desc])
 
@@ -737,7 +737,7 @@ export default function UserDashboard(){
     if(requiresCode){
       const normalized = String(voteCode||'').trim()
       if(normalized.length !== 6 || !/^[0-9]{6}$/.test(normalized)){
-        Swal.fire({title: 'Invalid Code', text: 'Please enter a valid 6-digit code to submit your vote', icon: 'error', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+        Swal.fire({title: 'Invalid Code', text: 'Please enter a valid 6-digit code to submit your vote', icon: 'error', confirmButtonText: 'OK', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
         return
       }
     }
@@ -755,9 +755,9 @@ export default function UserDashboard(){
       }
       await giveVote({ EventID: activeEvent._id, ElectionType, SelectedNominee, code: voteCode })
       setHasVoted(true)
-      Swal.fire({title: 'Vote Submitted!', text: 'Your vote has been successfully submitted and recorded', icon: 'success', confirmButtonText: 'Thank You!', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Vote Submitted!', text: 'Your vote has been successfully submitted and recorded', icon: 'success', confirmButtonText: 'Thank You!', background: 'rgba(134, 239, 172, 0.15)', color: 'var(--text-primary)'})
     }catch(err){
-      Swal.fire({title: 'Vote Failed', text: err?.response?.data?.message || 'Failed to submit your vote', icon: 'error', confirmButtonText: 'Try Again', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Vote Failed', text: err?.response?.data?.message || 'Failed to submit your vote', icon: 'error', confirmButtonText: 'Try Again', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
     } finally {
       setIsSubmittingVote(false)
     }
@@ -931,10 +931,10 @@ export default function UserDashboard(){
       setCampaignPosts(Array.isArray(refreshed)? refreshed : (refreshed?.posts||[]))
       setEditingPostId(null)
       setEditingPost(null)
-      Swal.fire({title: 'Success!', text: 'Your post has been updated successfully', icon: 'success', confirmButtonText: 'Done', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Success!', text: 'Your post has been updated successfully', icon: 'success', confirmButtonText: 'Done', background: 'rgba(134, 239, 172, 0.15)', color: 'var(--text-primary)'})
     } catch (err) {
       setCampaignError(err?.response?.data?.message || 'Failed to update post')
-      Swal.fire({title: 'Update Failed', text: err?.response?.data?.message || 'Failed to update your post', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Update Failed', text: err?.response?.data?.message || 'Failed to update your post', icon: 'error', confirmButtonText: 'Retry', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
     } finally {
       setEditLoading(false)
     }
@@ -942,7 +942,7 @@ export default function UserDashboard(){
 
   const handleDeletePost = useCallback(async (postId)=>{
     if(!activeEvent) return
-    const result = await Swal.fire({title: 'Delete Post?', text: 'This action cannot be undone. Your post will be permanently deleted.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'var(--bg-card)', color: 'var(--text-primary)'}); if (!result.isConfirmed) return
+    const result = await Swal.fire({title: 'Delete Post?', text: 'This action cannot be undone. Your post will be permanently deleted.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'rgba(239, 193, 68, 0.15)', color: 'var(--text-primary)'}); if (!result.isConfirmed) return
     try{
       await deleteCampaignPost({ eventID: activeEvent._id, postID: postId })
       setCampaignPosts(p=> p.filter(x=> x._id!==postId))
@@ -1001,9 +1001,9 @@ export default function UserDashboard(){
       if (activeEvent?.votingMode !== 'online') return
       setSendingCode(true)
       await sendOnlineVoteCode(activeEvent._id)
-      Swal.fire({title: 'Code Sent!', text: 'A verification code has been sent to your email address', icon: 'success', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Code Sent!', text: 'A verification code has been sent to your email address', icon: 'success', confirmButtonText: 'OK', background: 'rgba(134, 239, 172, 0.15)', color: 'var(--text-primary)'})
     }catch(err){
-      Swal.fire({title: 'Failed to Send', text: err?.response?.data?.message || 'Failed to send verification code', icon: 'error', confirmButtonText: 'Try Again', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Failed to Send', text: err?.response?.data?.message || 'Failed to send verification code', icon: 'error', confirmButtonText: 'Try Again', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--text-primary)'})
     }finally{
       setSendingCode(false)
     }
@@ -1212,7 +1212,7 @@ export default function UserDashboard(){
                           );
                         })}
                       </ul>
-                    </div>
+                                       </div>
                   )}
                   
                   {results.NomineeListForRank && results.NomineeListForRank.length > 0 && (
@@ -1249,9 +1249,184 @@ export default function UserDashboard(){
             </div>
           )}
 
+          {/* Voter Registration Card */}
+          <div className={`mb-6 flex flex-col md:flex-row justify-between items-center bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>
+              <span className={`text-base font-semibold ${TEXT_PRIMARY} mb-2 md:mb-0`}>Voter Registration Status:</span>
+              <button 
+                  onClick={onRegisterVoter} 
+                  disabled={currentStatus !== 'registration' || isVoterRegistered} 
+                  className={`min-w-[150px] px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 shadow-md ${
+                      currentStatus === 'registration' && !isVoterRegistered 
+                      ? `bg-[#1E3A8A] text-white hover:bg-[#3B82F6] shadow-[#1E3A8A]/50` 
+                      : isVoterRegistered 
+                      ? `bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed border border-gray-300 dark:border-gray-600`
+                      : `bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed`
+                  }`}
+              >
+                  {isVoterRegistered ? 'REGISTERED' : 'REGISTER AS VOTER'}
+              </button>
+          </div>
 
-          {/* Campaign Posting Section (FACEBOOK STYLE) */}
-          <div className="mb-10">
+          {currentStatus === 'registration' && (
+            <form onSubmit={(e) => { e.preventDefault(); onNominate(e); }} className={`p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700`}>
+              <h4 className={`font-bold text-xl ${ACCENT_PRIMARY_TEXT} mb-4 border-b border-gray-200 dark:border-gray-700 pb-2`}>
+                Nominee Registration ({isNomineeRegistered ? 'SUBMITTED' : 'OPEN'})
+              </h4>
+              <p className={`${TEXT_SECONDARY} mb-6 text-sm`}>
+                {isNomineeRegistered 
+                  ? 'Your nomination is submitted and is awaiting admin approval. You will be notified when the status changes.' 
+                  : 'Select a ballot image and provide a compelling description to nominate yourself for this event.'}
+              </p>
+              
+              <h5 className={`text-sm font-semibold mb-3 ${TEXT_PRIMARY}`}>Select Ballot Image</h5>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                {ballots.map(b => (
+                  <label 
+                    key={b.publicId} 
+                    className={`relative block rounded-lg overflow-hidden transition duration-150 border-2 
+                      ${isNomineeRegistered ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'} 
+                      ${selectedBallot?.publicId === b.publicId 
+                        ? `ring-4 ring-offset-2 ring-current ${ACCENT_PRIMARY_TEXT} ring-offset-white dark:ring-offset-gray-900 border-current` 
+                        : 'border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white/50'}`}
+                  >
+                    <input 
+                      type="radio" 
+                      name="ballot" 
+                      className="absolute opacity-0" 
+                      disabled={isNomineeRegistered} 
+                      checked={selectedBallot?.publicId === b.publicId}
+                      onChange={(e) => handleBallotSelection(b, e)} 
+                    />
+                    <img src={b.url} alt="Ballot" className="w-full aspect-[4/3] object-cover" />
+                  </label>
+                ))}
+              </div>
+
+              <h5 className={`text-sm font-semibold mb-2 ${TEXT_PRIMARY}`}>Nominee Description/Slogan</h5>
+              <textarea 
+                className={`w-full p-4 bg-gray-200 dark:bg-gray-700/50 rounded-lg mb-6 ${TEXT_PRIMARY} placeholder-gray-500 border border-gray-300 dark:border-gray-700 
+                  focus:border-current ${ACCENT_PRIMARY_TEXT} focus:ring-1 focus:ring-current transition duration-150`} 
+                rows="3"
+                placeholder="Enter your nominee description/slogan here..." 
+                disabled={isNomineeRegistered} 
+                value={desc} 
+                onChange={handleDescriptionChange} 
+              />
+              
+              <button 
+                type="submit"
+                disabled={isNomineeRegistered || !selectedBallot || !desc.trim()} 
+                className={`w-full px-6 py-3 rounded-lg font-bold text-base transition duration-200 shadow-md ${
+                  isNomineeRegistered || !selectedBallot || !desc.trim()
+                  ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
+                  : BTN_PRIMARY
+                }`}
+              >
+                {isNomineeRegistered ? 'NOMINATION SUBMITTED' : 'SUBMIT NOMINEE APPLICATION'}
+              </button>
+            </form>
+          )}
+
+          {currentStatus === 'voting' && (
+            <form onSubmit={(e) => { e.preventDefault(); onVote(e); }} className="space-y-6">
+              <h4 className={`font-bold text-xl ${ACCENT_VIOLET} mb-4 border-b border-gray-200 dark:border-gray-700 pb-2`}>
+                  CAST YOUR VOTE ({activeEvent.ElectionType.toUpperCase()})
+              </h4>
+              {nominees.length === 0 && (
+                <div className={`p-6 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center ${TEXT_SECONDARY}`}>
+                  No approved nominees yet for this event.
+                </div>
+              )}
+              <div className="grid md:grid-cols-2 gap-4">
+                {nominees.map(n => {
+                  const id = n.UserID?._id || n.UserID
+                  const isRank = activeEvent.ElectionType==='Rank'
+                  const checked = isRank ? rankOrder.includes(id) : !!voteSelection[id]
+                  const pos = isRank ? rankOrder.indexOf(id) : -1
+                  const name = n.UserID?.FullName || id
+                  const userName = n.UserID?.UserName || 'N/A'
+                  const profileImage = n.SelectedBalot?.url || n.UserID?.ProfileImage || 'https://placehold.co/60x60/f3f4f6/111827?text=AD'
+
+                  return (
+                    <label 
+                      key={id} 
+                      className={`relative p-4 rounded-xl flex items-center gap-4 transition duration-200 border 
+                      ${checked ? `bg-blue-100 dark:bg-violet-900/40 ring-2 ring-current ${ACCENT_VIOLET} border-current` : `${BG_CARD} border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700/50`}
+                      ${hasVoted ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
+                      `}
+                    >
+                      <input
+                        type={isRank ? 'checkbox' : (activeEvent.ElectionType==='Single'?'radio':'checkbox')}
+                        name={activeEvent.ElectionType==='Single'?'nominee-single':'nominee'}
+                        checked={checked}
+                        disabled={hasVoted}
+                        className={`w-5 h-5 accent-violet-600 dark:accent-violet-400`}
+                        onChange={(e) => handleVoteChange(id, activeEvent.ElectionType, e)}
+                      />
+                      {isRank && pos>=0 && (
+                        <span className={`absolute -top-3 -left-3 w-7 h-7 rounded-full bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-900 text-sm font-bold flex items-center justify-center border-2 border-white dark:border-gray-900 shadow-md`}>
+                          {pos + 1}
+                        </span>
+                      )}
+                      <img 
+                        src={profileImage} 
+                        alt={name} 
+                        className="w-14 h-14 rounded-full object-cover ring-2 ring-gray-400 dark:ring-gray-600" 
+                      />
+                      <div>
+                        <div className={`font-bold text-lg ${TEXT_PRIMARY}`}>{name}</div>
+                        <div className={`text-xs ${TEXT_SECONDARY}`}>@{userName}</div>
+                      </div>
+                    </label>
+                  )
+                })}
+              </div>
+              
+              {activeEvent?.votingMode === 'online' && (
+                <div className="flex items-center gap-3">
+                  <input value={voteCode} onChange={e=>setVoteCode(e.target.value)} placeholder="Enter 6-digit code" className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700" />
+                  <button type="button" disabled={sendingCode} onClick={requestVoteCode} className={`px-3 py-2 rounded text-sm ${sendingCode?'bg-gray-300 text-gray-600':'bg-blue-600 text-white hover:bg-blue-500'}`}>Send Code</button>
+                </div>
+              )}
+
+              {activeEvent?.votingMode === 'onCampus' && (
+                <div className="flex items-center gap-3">
+                  <input value={voteCode} onChange={e=>setVoteCode(e.target.value)} placeholder="Enter current on-campus code" className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700" />
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Ask admin or supervisor for the current code.</span>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row justify-end items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                {(!hasVoted && isVoteDisabled) && (
+                  <span className={`text-sm ${ACCENT_ERROR} font-mono text-center sm:text-right`}>
+                    <span className="mr-1">❌</span>
+                    {activeEvent.ElectionType==='Single' ? 'Select ONE nominee.' : activeEvent.ElectionType==='MultiVote' ? 'Select at least ONE nominee.' : 'Select and rank at least ONE nominee.'}
+                  </span>
+                )}
+                {hasVoted ? (
+                  <span className={`min-w-[200px] px-6 py-3 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 ${ACCENT_SUCCESS} border border-current font-bold shadow-lg text-center`}>
+                    <span className="mr-2">✅</span>
+                    SUBMITTED
+                  </span>
+                ) : (
+                  <button 
+                    type="submit"
+                    disabled={isVoteDisabled || isSubmittingVote} 
+                    className={`min-w-[200px] px-6 py-3 rounded-lg font-bold text-base transition duration-200 shadow-xl ${
+                      (isVoteDisabled || isSubmittingVote)
+                      ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
+                      : `bg-violet-600 text-white hover:bg-violet-500 shadow-violet-900/60`
+                    }`}
+                  >
+                    {isSubmittingVote ? 'SUBMITTING...' : (activeEvent.ElectionType==='Rank' ? (rankOrder.length ? 'SUBMIT RANKED VOTE' : 'SELECT NOMINEES') : 'SUBMIT VOTE')}
+                  </button>
+                )}
+              </div>
+            </form>
+          )}
+
+          {/* Campaign Posting Section (FACEBOOK STYLE) - MOVED TO BOTTOM */}
+          <div className="mb-10 mt-10">
             <h4 className={`text-xl font-extrabold mb-4 ${ACCENT_PRIMARY_TEXT}`}>Event Discussion & Updates</h4>
             {campaignError && (
               <div className="mb-4 text-xs p-3 rounded bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700">
@@ -1521,183 +1696,6 @@ export default function UserDashboard(){
               })}
             </div>
           </div>
-
-
-          {/* Voter Registration Card */}
-          <div className={`mb-6 flex flex-col md:flex-row justify-between items-center bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>
-              <span className={`text-base font-semibold ${TEXT_PRIMARY} mb-2 md:mb-0`}>Voter Registration Status:</span>
-              <button 
-                  onClick={onRegisterVoter} 
-                  disabled={currentStatus !== 'registration' || isVoterRegistered} 
-                  className={`min-w-[150px] px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 shadow-md ${
-                      currentStatus === 'registration' && !isVoterRegistered 
-                      ? `bg-[#1E3A8A] text-white hover:bg-[#3B82F6] shadow-[#1E3A8A]/50` 
-                      : isVoterRegistered 
-                      ? `bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed border border-gray-300 dark:border-gray-600`
-                      : `bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed`
-                  }`}
-              >
-                  {isVoterRegistered ? 'REGISTERED' : 'REGISTER AS VOTER'}
-              </button>
-          </div>
-
-          {currentStatus === 'registration' && (
-            <form onSubmit={(e) => { e.preventDefault(); onNominate(e); }} className={`p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700`}>
-              <h4 className={`font-bold text-xl ${ACCENT_PRIMARY_TEXT} mb-4 border-b border-gray-200 dark:border-gray-700 pb-2`}>
-                Nominee Registration ({isNomineeRegistered ? 'SUBMITTED' : 'OPEN'})
-              </h4>
-              <p className={`${TEXT_SECONDARY} mb-6 text-sm`}>
-                {isNomineeRegistered 
-                  ? 'Your nomination is submitted and is awaiting admin approval. You will be notified when the status changes.' 
-                  : 'Select a ballot image and provide a compelling description to nominate yourself for this event.'}
-              </p>
-              
-              <h5 className={`text-sm font-semibold mb-3 ${TEXT_PRIMARY}`}>Select Ballot Image</h5>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                {ballots.map(b => (
-                  <label 
-                    key={b.publicId} 
-                    className={`relative block rounded-lg overflow-hidden transition duration-150 border-2 
-                      ${isNomineeRegistered ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'} 
-                      ${selectedBallot?.publicId === b.publicId 
-                        ? `ring-4 ring-offset-2 ring-current ${ACCENT_PRIMARY_TEXT} ring-offset-white dark:ring-offset-gray-900 border-current` 
-                        : 'border-gray-300 dark:border-gray-700 hover:border-gray-900 dark:hover:border-white/50'}`}
-                  >
-                    <input 
-                      type="radio" 
-                      name="ballot" 
-                      className="absolute opacity-0" 
-                      disabled={isNomineeRegistered} 
-                      checked={selectedBallot?.publicId === b.publicId}
-                      onChange={(e) => handleBallotSelection(b, e)} 
-                    />
-                    <img src={b.url} alt="Ballot" className="w-full aspect-[4/3] object-cover" />
-                  </label>
-                ))}
-              </div>
-
-              <h5 className={`text-sm font-semibold mb-2 ${TEXT_PRIMARY}`}>Nominee Description/Slogan</h5>
-              <textarea 
-                className={`w-full p-4 bg-gray-200 dark:bg-gray-700/50 rounded-lg mb-6 ${TEXT_PRIMARY} placeholder-gray-500 border border-gray-300 dark:border-gray-700 
-                  focus:border-current ${ACCENT_PRIMARY_TEXT} focus:ring-1 focus:ring-current transition duration-150`} 
-                rows="3"
-                placeholder="Enter your nominee description/slogan here..." 
-                disabled={isNomineeRegistered} 
-                value={desc} 
-                onChange={handleDescriptionChange} 
-              />
-              
-              <button 
-                type="submit"
-                disabled={isNomineeRegistered || !selectedBallot || !desc.trim()} 
-                className={`w-full px-6 py-3 rounded-lg font-bold text-base transition duration-200 shadow-md ${
-                  isNomineeRegistered || !selectedBallot || !desc.trim()
-                  ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
-                  : BTN_PRIMARY
-                }`}
-              >
-                {isNomineeRegistered ? 'NOMINATION SUBMITTED' : 'SUBMIT NOMINEE APPLICATION'}
-              </button>
-            </form>
-          )}
-
-          {currentStatus === 'voting' && (
-            <form onSubmit={(e) => { e.preventDefault(); onVote(e); }} className="space-y-6">
-              <h4 className={`font-bold text-xl ${ACCENT_VIOLET} mb-4 border-b border-gray-200 dark:border-gray-700 pb-2`}>
-                  CAST YOUR VOTE ({activeEvent.ElectionType.toUpperCase()})
-              </h4>
-              {nominees.length === 0 && (
-                <div className={`p-6 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center ${TEXT_SECONDARY}`}>
-                  No approved nominees yet for this event.
-                </div>
-              )}
-              <div className="grid md:grid-cols-2 gap-4">
-                {nominees.map(n => {
-                  const id = n.UserID?._id || n.UserID
-                  const isRank = activeEvent.ElectionType==='Rank'
-                  const checked = isRank ? rankOrder.includes(id) : !!voteSelection[id]
-                  const pos = isRank ? rankOrder.indexOf(id) : -1
-                  const name = n.UserID?.FullName || id
-                  const userName = n.UserID?.UserName || 'N/A'
-                  const profileImage = n.SelectedBalot?.url || n.UserID?.ProfileImage || 'https://placehold.co/60x60/f3f4f6/111827?text=AD'
-
-                  return (
-                    <label 
-                      key={id} 
-                      className={`relative p-4 rounded-xl flex items-center gap-4 transition duration-200 border 
-                      ${checked ? `bg-blue-100 dark:bg-violet-900/40 ring-2 ring-current ${ACCENT_VIOLET} border-current` : `${BG_CARD} border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700/50`}
-                      ${hasVoted ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
-                      `}
-                    >
-                      <input
-                        type={isRank ? 'checkbox' : (activeEvent.ElectionType==='Single'?'radio':'checkbox')}
-                        name={activeEvent.ElectionType==='Single'?'nominee-single':'nominee'}
-                        checked={checked}
-                        disabled={hasVoted}
-                        className={`w-5 h-5 accent-violet-600 dark:accent-violet-400`}
-                        onChange={(e) => handleVoteChange(id, activeEvent.ElectionType, e)}
-                      />
-                      {isRank && pos>=0 && (
-                        <span className={`absolute -top-3 -left-3 w-7 h-7 rounded-full bg-violet-600 dark:bg-violet-400 text-white dark:text-gray-900 text-sm font-bold flex items-center justify-center border-2 border-white dark:border-gray-900 shadow-md`}>
-                          {pos + 1}
-                        </span>
-                      )}
-                      <img 
-                        src={profileImage} 
-                        alt={name} 
-                        className="w-14 h-14 rounded-full object-cover ring-2 ring-gray-400 dark:ring-gray-600" 
-                      />
-                      <div>
-                        <div className={`font-bold text-lg ${TEXT_PRIMARY}`}>{name}</div>
-                        <div className={`text-xs ${TEXT_SECONDARY}`}>@{userName}</div>
-                      </div>
-                    </label>
-                  )
-                })}
-              </div>
-              
-              {activeEvent?.votingMode === 'online' && (
-                <div className="flex items-center gap-3">
-                  <input value={voteCode} onChange={e=>setVoteCode(e.target.value)} placeholder="Enter 6-digit code" className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700" />
-                  <button type="button" disabled={sendingCode} onClick={requestVoteCode} className={`px-3 py-2 rounded text-sm ${sendingCode?'bg-gray-300 text-gray-600':'bg-blue-600 text-white hover:bg-blue-500'}`}>Send Code</button>
-                </div>
-              )}
-
-              {activeEvent?.votingMode === 'onCampus' && (
-                <div className="flex items-center gap-3">
-                  <input value={voteCode} onChange={e=>setVoteCode(e.target.value)} placeholder="Enter current on-campus code" className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700" />
-                  <span className="text-xs text-gray-600 dark:text-gray-400">Ask admin or supervisor for the current code.</span>
-                </div>
-              )}
-
-              <div className="flex flex-col sm:flex-row justify-end items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                {(!hasVoted && isVoteDisabled) && (
-                  <span className={`text-sm ${ACCENT_ERROR} font-mono text-center sm:text-right`}>
-                    <span className="mr-1">❌</span>
-                    {activeEvent.ElectionType==='Single' ? 'Select ONE nominee.' : activeEvent.ElectionType==='MultiVote' ? 'Select at least ONE nominee.' : 'Select and rank at least ONE nominee.'}
-                  </span>
-                )}
-                {hasVoted ? (
-                  <span className={`min-w-[200px] px-6 py-3 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 ${ACCENT_SUCCESS} border border-current font-bold shadow-lg text-center`}>
-                    <span className="mr-2">✅</span>
-                    SUBMITTED
-                  </span>
-                ) : (
-                  <button 
-                    type="submit"
-                    disabled={isVoteDisabled || isSubmittingVote} 
-                    className={`min-w-[200px] px-6 py-3 rounded-lg font-bold text-base transition duration-200 shadow-xl ${
-                      (isVoteDisabled || isSubmittingVote)
-                      ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
-                      : `bg-violet-600 text-white hover:bg-violet-500 shadow-violet-900/60`
-                    }`}
-                  >
-                    {isSubmittingVote ? 'SUBMITTING...' : (activeEvent.ElectionType==='Rank' ? (rankOrder.length ? 'SUBMIT RANKED VOTE' : 'SELECT NOMINEES') : 'SUBMIT VOTE')}
-                  </button>
-                )}
-              </div>
-            </form>
-          )}
         </div>
       );
     }
@@ -1719,7 +1717,7 @@ export default function UserDashboard(){
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${BG_BODY} ${TEXT_PRIMARY} font-sans`}>
+    <div className="flex flex-col min-h-screen">
       {/* Edit Post Modal */}
       <EditPostModal 
         post={editingPost}
@@ -1733,13 +1731,13 @@ export default function UserDashboard(){
       />
 
       {/* Layout Container */}
-      <div className="flex flex-1 h-screen overflow-hidden">
+      <div className={`flex-1 h-screen overflow-hidden ${BG_BODY} ${TEXT_PRIMARY} font-sans flex flex-col lg:flex-row`}>
         {/* Sidebar */}
-        <aside className={`w-full sm:w-72 ${BG_SIDEBAR} shadow-2xl p-6 border-r border-gray-200 dark:border-gray-700/50 flex-shrink-0 overflow-y-auto`}>
+        <aside className={`w-full lg:w-72 ${BG_SIDEBAR} shadow-xl lg:shadow-2xl p-6 lg:h-screen lg:overflow-y-auto border-r border-gray-200 dark:border-gray-700/50 flex-shrink-0`}>
           
           <div className="flex items-center mb-10 pb-4 border-b border-gray-200 dark:border-gray-700">
             <span className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:to-gray-400`}>
-              E-Vote
+              E-VoteHub
             </span>
           </div>
 
@@ -1783,7 +1781,7 @@ export default function UserDashboard(){
             />
             <button
               onClick={onLogout} 
-              className={`flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700`}
+              className={`flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 font-medium text-white bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 shadow-sm`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
               <span className="text-sm">Logout</span>
@@ -1792,7 +1790,7 @@ export default function UserDashboard(){
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-10">
+        <main className="flex-1 p-6 md:p-10 lg:h-screen lg:overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {renderActiveContent()}
           </div>
