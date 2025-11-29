@@ -11,6 +11,7 @@ import Profile from './Profile.jsx'
 import PublicProfile from './PublicProfile.jsx'
 import PrivacyPolicy from './PrivacyPolicy.jsx' // already present
 import Terms from './Terms.jsx' // added import
+import AboutUs from './AboutUs.jsx' // <-- new import
 
 // Logos are now conditionally referenced based on the current theme state.
 
@@ -162,6 +163,7 @@ export default function App(){
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/aboutus" element={<AboutUs />} /> {/* About Us page route */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
