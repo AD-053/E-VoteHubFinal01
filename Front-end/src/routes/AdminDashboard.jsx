@@ -1,7 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import React, { useEffect, useMemo, useState, useCallback, useRef } from 'react'
 import Swal from 'sweetalert2'
-import { Link } from 'lucide-react'
 import { listEvents, countVote, getPendingNominees, approveNominee, createEvent, api as apiClient, listCampaignPosts, deleteCampaignPost, deleteCampaignComment, rotateOnCampusCode, updateEventTimes } from '../lib/api'
 import { getVoters } from '../lib/votersApi'
 import { io } from 'socket.io-client'
@@ -45,71 +44,6 @@ const COLOR_MAP = {
 
 // --- Inline SVG Icons ---
 const MailIcon = ({ className = '' }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"></path></svg>);
-
-const Footer = () => (
-  <footer className={`${COLOR_MAP.SCI_BG} border-t border-gray-200 dark:border-gray-700 mt-16 py-12`}>
-    <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
-      
-      {/* 1. Logo and Mission - FIXED TO MATCH NAVBAR/HERO STYLE */}
-      <div className="col-span-2 md:col-span-1">
-        <div className="flex items-center mb-4">
-            {/* Theme-aware E-VoteHub text using gradient */}
-            <span 
-                className={`text-xl font-bold bg-clip-text text-transparent 
-                    bg-gradient-to-r 
-                    from-gray-900 via-gray-700 to-gray-500 
-                dark:from-white dark:to-gray-500`}
-            >
-                E-VoteHub
-            </span>
-        </div>
-        <p className={`text-xs ${COLOR_MAP.TEXT_SECONDARY} max-w-xs`}>
-          Unifying secure online voting with dynamic social campaigning to drive democratic engagement.
-        </p>
-      </div>
-
-      {/* 2. Navigation Links */}
-      <div>
-        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Platform</h4>
-        <ul className="space-y-2 text-sm">
-          <li><RouterLink to="/" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Home</RouterLink></li>
-          <li><RouterLink to="/user" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Dashboard</RouterLink></li>
-          <li><RouterLink to="/profile" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Profile Settings</RouterLink></li>
-        </ul>
-      </div>
-
-      {/* 3. Resources/Legal Links */}
-      <div>
-        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Resources</h4>
-        <ul className="space-y-2 text-sm">
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Security Policy</a></li>
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Terms of Service</a></li>
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Privacy Statement</a></li>
-        </ul>
-      </div>
-
-      {/* 4. Contact */}
-      <div>
-        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Contact</h4>
-        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
-            <MailIcon className={`w-4 h-4 mr-2 text-[#1E3A8A] dark:text-[#3B82F6]`}/>
-            support@evotehub.com
-        </p>
-        <p className="text-xs text-slate-500 dark:text-slate-600">
-            [Shajalal University of Science and Technology]
-        </p>
-      </div>
-
-    </div>
-
-    {/* Bottom Copyright and ID */}
-    <div className="max-w-6xl mx-auto px-4 mt-10 pt-6 border-t border-gray-300 dark:border-slate-700 text-center">
-      <p className="text-xs text-slate-500 dark:text-slate-600">
-        &copy; {new Date().getFullYear()} E-VoteHub. All rights reserved
-      </p>
-    </div>
-  </footer>
-);
 
 const BG_BODY = 'bg-[#ECEBEB] dark:bg-[#1A2129]' 
 const BG_SIDEBAR = 'bg-white dark:bg-[#111827]'
@@ -160,6 +94,79 @@ const ThumbDownIcon = ({ className = '', fill = "none" }) => (<svg xmlns="http:/
 const CommentIcon = ({ className = '' }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>);
 const TrashIcon = ({ className = '' }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>);
 const SendIcon = ({ className = '' }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>);
+
+// Footer Component
+const Footer = () => (
+  <footer className={`${COLOR_MAP.SCI_BG} border-t border-gray-200 dark:border-gray-700 mt-16 py-12`}>
+    <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+      
+      {/* 1. Logo and Mission - FIXED TO MATCH NAVBAR/HERO STYLE */}
+      <div className="col-span-2 md:col-span-1">
+        <div className="flex items-center mb-4">
+            {/* Theme-aware E-VoteHub text using gradient */}
+            <span 
+                className={`text-xl font-bold bg-clip-text text-transparent 
+                    bg-gradient-to-r 
+                    from-gray-900 via-gray-700 to-gray-500 
+                dark:from-white dark:to-gray-500`}
+            >
+                E-VoteHub
+            </span>
+        </div>
+        <p className={`text-xs ${COLOR_MAP.TEXT_SECONDARY} max-w-xs`}>
+          Unifying secure online voting with dynamic social campaigning to drive democratic engagement.
+        </p>
+      </div>
+
+      {/* 2. Navigation Links */}
+      <div>
+        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Platform</h4>
+        <ul className="space-y-2 text-sm">
+          <li><Link to="/" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Home</Link></li>
+          <li><Link to="/user" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Dashboard</Link></li>
+          <li><Link to="/profile" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Profile Settings</Link></li>
+        </ul>
+      </div>
+
+      {/* 3. Resources/Legal Links */}
+      <div>
+        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Resources</h4>
+        <ul className="space-y-2 text-sm">
+          <li><Link to="/privacyPolicy" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Privacy Policy</Link></li>
+          <li><Link to="/terms" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Terms & Conditions</Link></li>
+        </ul>
+      </div>
+
+      {/* 4. Contact */}
+      <div>
+        <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Contact</h4>
+        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
+            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
+            rahad@gmail.com
+        </p>
+        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
+            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
+            autanu2020@gmail.com
+        </p>
+        <p className={`text-sm ${COLOR_MAP.TEXT_SECONDARY} flex items-center mb-2`}>
+            <MailIcon className={`w-4 h-4 mr-2 ${COLOR_MAP.SCI_ACCENT_TEXT}`}/>
+            shajjad@gmail.com
+        </p>
+        <p className="text-xs text-slate-500 dark:text-slate-600">
+            [Shajalal University of Science and Technology]
+        </p>
+      </div>
+
+    </div>
+
+    {/* Bottom Copyright and ID */}
+    <div className="max-w-6xl mx-auto px-4 mt-10 pt-6 border-t border-gray-300 dark:border-slate-700 text-center">
+      <p className="text-xs text-slate-500 dark:text-slate-600">
+        &copy; {new Date().getFullYear()} E-VoteHub. All rights reserved <span className="font-mono text-gray-400 dark:text-slate-700/50"></span>
+      </p>
+    </div>
+  </footer>
+);
 
 const timeAgo = (dateParam) => {
   if (!dateParam) return null;
@@ -1176,7 +1183,7 @@ export default function AdminDashboard(){
                 <div className="flex-1 h-1 bg-gray-300 dark:bg-gray-700 rounded overflow-hidden">
                   <div
                     className="h-full bg-blue-600 dark:bg-blue-400 transition-all"
-                    style={{ width: codeInfo.expiresAt ? `${Math.max(0, Math.min(100, ((new Date(codeInfo.expiresAt).getTime() - Date.now()) / ((activeEvent.codeRotationMinutes||2)*60000)) * 100))}%` : '0%' }}
+                                       style={{ width: codeInfo.expiresAt ? `${Math.max(0, Math.min(100, ((new Date(codeInfo.expiresAt).getTime() - Date.now()) / ((activeEvent.codeRotationMinutes||2)*60000)) * 100))}%` : '0%' }}
                   />
                 </div>
               )}
@@ -1246,7 +1253,7 @@ export default function AdminDashboard(){
                 from-gray-900 via-gray-700 to-gray-500 
                 dark:from-white dark:to-gray-400`}
           >
-            E-Vote Admin
+            E-VoteHub Admin
           </span>
         </div>
 

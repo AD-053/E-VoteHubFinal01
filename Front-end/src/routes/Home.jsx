@@ -122,9 +122,8 @@ const Footer = () => (
       <div>
         <h4 className={`text-sm font-semibold mb-3 uppercase tracking-wider`}>Resources</h4>
         <ul className="space-y-2 text-sm">
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Security Policy</a></li>
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Terms of Service</a></li>
-          <li><a href="#" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Privacy Statement</a></li>
+          <li><Link to="/privacyPolicy" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Privacy Policy</Link></li>
+          <li><Link to="/terms" className={`text-slate-600 dark:text-slate-400 hover:${COLOR_MAP.SCI_ACCENT_TEXT} transition`}>Terms & Conditions</Link></li>
         </ul>
       </div>
 
@@ -231,6 +230,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5. CAMPAIGN & VOTING PHASE INFO */}
+      <section className={`py-20 ${COLOR_MAP.SCI_BG} border-t border-gray-300 dark:border-slate-700`}>
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${COLOR_MAP.TEXT_MAIN}`}>
+            Two-Phase Election Workflow
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Phase 1: Campaign */}
+            <div className={`p-8 rounded-xl ${COLOR_MAP.SCI_PANEL} border-l-8 border-current ${COLOR_MAP.SCI_ACCENT_TEXT}`}>
+              <h3 className={`text-2xl font-bold mb-4 ${COLOR_MAP.TEXT_MAIN}`}>
+                🎯 Phase 1: Social Campaign
+              </h3>
+              <p className={`${COLOR_MAP.TEXT_SECONDARY} mb-4 text-sm leading-relaxed`}>
+                Nominees build their campaigns with dynamic content, engage voters through social updates, and drive participation during the registration and campaign window.
+              </p>
+              <ul className={`space-y-2 text-sm ${COLOR_MAP.TEXT_SECONDARY}`}>
+                <li>✓ Post updates, images, and videos</li>
+                <li>✓ Respond to voter comments</li>
+                <li>✓ Track engagement metrics</li>
+                <li>✓ Build voter support organically</li>
+              </ul>
+            </div>
+
+            {/* Phase 2: Voting */}
+            <div className={`p-8 rounded-xl ${COLOR_MAP.SCI_PANEL} border-l-8 border-current text-green-600 dark:text-green-400`}>
+              <h3 className={`text-2xl font-bold mb-4 ${COLOR_MAP.TEXT_MAIN}`}>
+                🗳️ Phase 2: Secure Voting
+              </h3>
+              <p className={`${COLOR_MAP.TEXT_SECONDARY} mb-4 text-sm leading-relaxed`}>
+                Once campaigns end, the system transitions to voting mode with full encryption, anonymity, and real-time result tallying available to election officials.
+              </p>
+              <ul className={`space-y-2 text-sm ${COLOR_MAP.TEXT_SECONDARY}`}>
+                <li>✓ Encrypted ballot submission</li>
+                <li>✓ Anonymous voter verification</li>
+                <li>✓ Real-time result tracking</li>
+                <li>✓ Tamper-proof audit trail</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4. LIVE SECURITY MONITOR PREVIEW */}
       <section className={`py-20 ${COLOR_MAP.SCI_BG}`}>
         <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
@@ -276,7 +318,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION SECTION */}
+      {/* 6. CALL TO ACTION SECTION */}
       <section className={`py-16 ${COLOR_MAP.SCI_PANEL} border-t border-gray-200 dark:border-slate-800`}>
         <div className="max-w-4xl mx-auto text-center px-4">
           <h2 

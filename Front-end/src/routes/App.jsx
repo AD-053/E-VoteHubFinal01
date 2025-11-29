@@ -9,6 +9,9 @@ import RequireAuth from '../components/RequireAuth.jsx'
 import { logout } from '../lib/api'
 import Profile from './Profile.jsx'
 import PublicProfile from './PublicProfile.jsx'
+import PrivacyPolicy from './PrivacyPolicy.jsx' // already present
+import Terms from './Terms.jsx' // added import
+
 // Logos are now conditionally referenced based on the current theme state.
 
 // --- Color Palette Mapping ---
@@ -161,6 +164,8 @@ export default function App(){
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} /> {/* new public route for Terms & Conditions */}
           <Route path="/user" element={<RequireAuth><UserDashboard /></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
           <Route path="/u/:id" element={<RequireAuth><PublicProfile /></RequireAuth>} />
