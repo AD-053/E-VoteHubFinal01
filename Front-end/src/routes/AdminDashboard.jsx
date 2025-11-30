@@ -611,9 +611,9 @@ export default function AdminDashboard(){
       setIsRotating(true)
       await rotateOnCampusCode(activeEvent._id)
       await fetchCodeInfo()
-      Swal.fire({title: 'Success!', text: 'Verification code rotated successfully', icon: 'success', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Success!', text: 'Verification code rotated successfully', icon: 'success', confirmButtonText: 'OK', background: 'rgb(28, 219, 50)', color: 'var(--text-primary)'})
     }catch(err){
-      Swal.fire({title: 'Rotation Failed', text: err?.response?.data?.message || 'Failed to rotate verification code', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Rotation Failed', text: err?.response?.data?.message || 'Failed to rotate verification code', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'})
     }finally{
       setIsRotating(false)
     }
@@ -634,7 +634,7 @@ export default function AdminDashboard(){
       await approveNominee({ EventID: activeEvent._id, NomineeID: uid })
       setPending(p => p.filter(x => (x.UserID?._id || x.UserID) !== uid))
     }catch(err){
-      Swal.fire({title: 'Approval Failed', text: err?.response?.data?.message || 'Failed to approve nominee', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Approval Failed', text: err?.response?.data?.message || 'Failed to approve nominee', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'})
     }
   }, [activeEvent?._id])
 
@@ -643,7 +643,7 @@ export default function AdminDashboard(){
     setIsCreating(true)
     try{
       await createEvent({ ...newEvent, BallotImageFiles: ballotFiles })
-      Swal.fire({title: 'Event Created!', text: 'New voting event has been created successfully', icon: 'success', confirmButtonText: 'Great!', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Event Created!', text: 'New voting event has been created successfully', icon: 'success', confirmButtonText: 'Great!', background: 'rgb(28, 219, 50)', color: 'var(--text-primary)'})
       setNewEvent({ Title:'', Description:'', RegEndTime:'', VoteStartTime:'', VoteEndTime:'', ElectionType:'Single', votingMode:'online', codeRotationMinutes:15 })
       setBallotFiles([])
       
@@ -651,7 +651,7 @@ export default function AdminDashboard(){
       setEvents(updated)
       setActiveView(NAV_ITEMS.DASHBOARD)
     }catch(err){
-      Swal.fire({title: 'Creation Failed', text: err?.response?.data?.message || 'Failed to create event', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Creation Failed', text: err?.response?.data?.message || 'Failed to create event', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'})
     }finally{
       setIsCreating(false)
     }
@@ -671,13 +671,13 @@ export default function AdminDashboard(){
     try{
       setSavingTimes(true)
       await updateEventTimes({ EventID: activeEvent._id, ...editTimes })
-      Swal.fire({title: 'Times Saved!', text: 'Event timing has been updated successfully', icon: 'success', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Times Saved!', text: 'Event timing has been updated successfully', icon: 'success', confirmButtonText: 'OK', background: 'rgb(28, 219, 50)', color: 'var(--text-primary)'})
       const refreshed = await listEvents()
       setEvents(refreshed)
       const updated = refreshed.find(e=>e._id===activeEvent._id)
       if(updated) setActiveEvent(updated)
     }catch(err){
-      Swal.fire({title: 'Update Failed', text: err?.response?.data?.message || 'Failed to update event times', icon: 'error', confirmButtonText: 'Try Again', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Update Failed', text: err?.response?.data?.message || 'Failed to update event times', icon: 'error', confirmButtonText: 'Try Again', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'})
     }finally{ setSavingTimes(false) }
   }, [activeEvent?._id, editTimes])
 
@@ -693,14 +693,14 @@ export default function AdminDashboard(){
     try{
       setSavingTimes(true)
       await updateEventTimes({ EventID: activeEvent._id, RegEndTime: regEnd.toISOString(), VoteStartTime: voteStart.toISOString(), VoteEndTime: voteEnd.toISOString() })
-      Swal.fire({title: 'Times Updated!', text: 'Event times have been saved successfully', icon: 'success', confirmButtonText: 'Done', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Times Updated!', text: 'Event times have been saved successfully', icon: 'success', confirmButtonText: 'Done', background: 'rgb(28, 219, 50)', color: 'var(--text-primary)'})
       const refreshed = await listEvents()
       setEvents(refreshed)
       const updated = refreshed.find(e=>e._id===activeEvent._id)
       if(updated) setActiveEvent(updated)
       setEditTimes({ RegEndDelta:'', VoteStartDelta:'', VoteEndDelta:'' })
     }catch(err){
-      Swal.fire({title: 'Failed', text: err?.response?.data?.message || 'Failed to apply changes', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+      Swal.fire({title: 'Failed', text: err?.response?.data?.message || 'Failed to apply changes', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'})
     }finally{ setSavingTimes(false) }
   }, [activeEvent, editTimes])
 
@@ -713,24 +713,24 @@ export default function AdminDashboard(){
   }, []);
 
   const handleAdminDeletePost = useCallback(async (postID) => {
-    const result = await Swal.fire({title: 'Delete Post?', text: 'This post will be permanently deleted. This action cannot be undone.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+    const result = await Swal.fire({title: 'Delete Post?', text: 'This post will be permanently deleted. This action cannot be undone.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'rgb(225, 247, 56)', color: 'var(--text-primary)'})
     if (!result.isConfirmed) return
     try{
       await deleteCampaignPost({ eventID: activeEvent._id, postID })
       setCampaignPosts(p=> p.filter(x=> x._id!==postID))
     }catch(err){ 
-      Swal.fire({title: 'Delete Failed', text: err?.response?.data?.message || 'Failed to delete post', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'}) 
+      Swal.fire({title: 'Delete Failed', text: err?.response?.data?.message || 'Failed to delete post', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'}) 
     }
   }, [activeEvent?._id])
 
   const handleAdminDeleteComment = useCallback(async (postID, commentID) => {
-    const confirmResult = await Swal.fire({title: 'Delete Comment?', text: 'This comment will be permanently removed.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'var(--bg-card)', color: 'var(--text-primary)'})
+    const confirmResult = await Swal.fire({title: 'Delete Comment?', text: 'This comment will be permanently removed.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, Delete', cancelButtonText: 'Cancel', confirmButtonColor: '#DC2626', cancelButtonColor: '#6B7280', background: 'rgb(225, 247, 56)', color: 'var(--text-primary)'})
     if (!confirmResult.isConfirmed) return
     try{
       await deleteCampaignComment({ eventID: activeEvent._id, commentID })
       setCampaignPosts(p=> p.map(x=> x._id===postID ? { ...x, comments: (x.comments||[]).filter(c=> c._id!==commentID) } : x ))
     }catch(err){ 
-      Swal.fire({title: 'Delete Failed', text: err?.response?.data?.message || 'Failed to delete comment', icon: 'error', confirmButtonText: 'Retry', background: 'var(--bg-card)', color: 'var(--text-primary)'}) 
+      Swal.fire({title: 'Delete Failed', text: err?.response?.data?.message || 'Failed to delete comment', icon: 'error', confirmButtonText: 'Retry', background: 'rgb(255, 0, 0)', color: 'var(--text-primary)'}) 
     }
   }, [activeEvent?._id])
 
@@ -1297,7 +1297,7 @@ export default function AdminDashboard(){
         
         <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
           <button
-            onClick={() => Swal.fire({title: 'Logout', text: 'Please use the main logout button in the top navigation', icon: 'info', confirmButtonText: 'OK', background: 'var(--bg-card)', color: 'var(--text-primary)'})} 
+            onClick={() => Swal.fire({title: 'Logout', text: 'Please use the main logout button in the top navigation', icon: 'info', confirmButtonText: 'OK', background: 'rgb(225, 247, 56)', color: 'var(--text-primary)'})} 
             className={`flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 bg-[#DC2626] text-white hover:bg-red-500 font-semibold shadow-md shadow-red-900/40`}
             data-testid="button-logout"
           >
